@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Written by James L. Rogers|githum.com/DarkWinged
+"""Written by James L. Rogers|github.com/DarkWinged
 Asks the user their name and what day it is.
 If no input is given it defaults to Monty and Day respectivly.
 Prints a greeting to the user and wishes them a happy day.
@@ -19,5 +19,5 @@ def get_date() -> str:
 if __name__ == '__main__':
     name = get_name()
     day = get_date()
-    print(f'Hello, {name}! Happy {day}!') 
+    print(f'Hello, {name}! Have a happy {day}!') 
 
