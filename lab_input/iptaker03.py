@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
-
+"""Written by James L. Rogers|githum.com/DarkWinged
+Asks the user their name and what day it is.
+If no input is given it defaults to Monty and Day respectivly.
+Prints a greeting to the user and wishes them a happy day.
+"""
 def get_name() -> str:
     result = input('Who are you?\n').strip()
     if result == '':
