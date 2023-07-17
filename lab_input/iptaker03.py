@@ -1,10 +1,16 @@
 #!/usr/bin/env python3
 
 def get_name() -> str:
-    return input('Who are you?\n').strip()
+    result = input('Who are you?\n').strip()
+    if result == '':
+        return 'Monty'
+    return result
 
 def get_date() -> str:
-    return input('What day of the week is it?\n').strip()
+    result = input('What day of the week is it?\n').strip()
+    if result == '':
+        return 'Day'
+    return result   
 
 if __name__ == '__main__':
     name = get_name()
