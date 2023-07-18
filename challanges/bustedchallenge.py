@@ -1,4 +1,4 @@
-#!/bin/env python3
+#!usr/bin/env python3
 
 # Defined function
 def greet_user():

@@ -1,5 +1,7 @@
 #!/usr/bin/python3
 
+import os
+
 from getpass import getpass
 from colorama import Fore, Style
 
@@ -39,3 +41,5 @@ if __name__ == '__main__':
                 print(user_name)
             case 'hostname':
                 print(host_name)
+            case 'clear':
+                os.system('clear')
