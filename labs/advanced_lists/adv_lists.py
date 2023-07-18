@@ -1,5 +1,5 @@
 #! /usr/bin/env python3
-
+from pprint import pprint
 
 def franchise_format(franchises: list[str, list[str, list[str]]]) -> dict[dict[list[str], str], str]:
     names = [index[0] for index in franchises]
@@ -29,6 +29,9 @@ if __name__ == '__main__':
 #                print(franchise)
 #                print(team)
 #                print(results[franchise][team][member])
+
+    pprint(results)
+    
     print(f'All of the franchises are {[franchise for franchise in results.keys()]}')
     print(f'My favorite franchise is {"Marvel"}')
     print(f'All of the Marvel teams are {[team for team in results["Marvel"].keys()]}')
