@@ -75,6 +75,8 @@ class Question:
                 invalid = False
 
 
+#Todo: Import question data from *.Json
+
 #initalizes and returns a question list.
 """
 new questions can be added by following this template: 
