@@ -61,7 +61,6 @@ class Question:
                 print(f'{key}) {self.awnsers[key][0]}')
             player_awnser = input('>')
             if player_awnser.lower() in valid:
-                print(self.awnsers[player_awnser][1])
                 player.update_alignment(self.awnsers[player_awnser][1])
                 invalid = False
 
