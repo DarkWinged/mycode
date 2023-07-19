@@ -1,4 +1,8 @@
 #!/usr/bin/env python3
+"""
+James L. Rogers | github.com/DarkWinged
+"""
+
 
 #Stores the player's name and their score.
 #Has methods to update and print a playe's score.
@@ -6,7 +10,7 @@ class Player:
     def __init__(self):
         name = ''
         while name == '':
-            name = input('Who are you?\n>')
+            name = input('Who are you?\n>').capitalize()
         self.name = name
         self.alignment = (0, 0)
 
@@ -17,38 +21,28 @@ class Player:
         orderlyness += orderlyness_change
         self.alignment = (orderlyness, goodness)
 
+    def format_score(self, value: int, dimension: tuple[str, str]) -> str:
+        negative, posative = dimension
+        if value <= -12:
+            return f'super {negative}'
+        elif value <= -9:
+            return negative
+        elif value <= -6:
+            return f'a little {negative}'
+        elif value >= 12:
+            return f'super {posative}'
+        elif value >= 9:
+            return posative
+        elif value >= 6:
+            return f'a little {posative}'
+        else:
+            return 'neutal'
+
     def print_alignment(self):
         orderlyness_score, goodness_score = self.alignment
-
-        if goodness_score <= -12:
-            goodness = 'super evil'
-        elif goodness_score <= -9:
-            goodness = 'evil'
-        elif goodness_score <= -6:
-            goodness = 'a little evil'
-        elif goodness_score >= 12:
-            goodness = 'super good'
-        elif goodness_score >= 9:
-            goodness = 'good'
-        elif goodness_score >= 6:
-            goodness = 'a little good'
-        else:
-            goodness = 'neutal'
-
-        if orderlyness_score <= -12:
-            orderlyness = 'super chaotic'
-        elif orderlyness_score <= -9:
-            orderlyness = 'chaotic'
-        elif orderlyness_score <= -6:
-            orderlyness = 'a little chaotic'
-        elif orderlyness_score >= 12:
-            orderlyness = 'super lawful'
-        elif orderlyness_score >= 9:
-            orderlyness = 'lawful'
-        elif orderlyness_score >= 6:
-            orderlyness = 'a little lawful'
-        else:
-            orderlyness = 'neutal'
+        
+        goodness = self.format_score(goodness_score, ['evil','good'])
+        orderlyness = self.format_score(orderlyness_score, ['chaotic','lawful'])
 
         print(f'{self.name} is {orderlyness} {goodness}')
 
