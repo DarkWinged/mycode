@@ -18,34 +18,34 @@ class Player:
         self.alignment = (orderlyness, goodness)
 
     def print_alignment(self):
-        orderlyness, goodness = self.alignment
+        orderlyness_score, goodness_score = self.alignment
 
-        if goodness <= -12:
+        if goodness_score <= -12:
             goodness = 'super evil'
-        elif goodness <= -9:
+        elif goodness_score <= -9:
             goodness = 'evil'
-        elif goodness <= -6:
+        elif goodness_score <= -6:
             goodness = 'a little evil'
-        elif goodness >= 12:
+        elif goodness_score >= 12:
             goodness = 'super good'
-        elif goodness >= 9:
+        elif goodness_score >= 9:
             goodness = 'good'
-        elif goodness >= 6:
+        elif goodness_score >= 6:
             goodness = 'a little good'
         else:
             goodness = 'neutal'
 
-        if orderlyness <= -12:
+        if orderlyness_score <= -12:
             orderlyness = 'super chaotic'
-        elif orderlyness <= -9:
+        elif orderlyness_score <= -9:
             orderlyness = 'chaotic'
-        elif orderlyness <= -6:
+        elif orderlyness_score <= -6:
             orderlyness = 'a little chaotic'
-        elif orderlyness >= 12:
+        elif orderlyness_score >= 12:
             orderlyness = 'super lawful'
-        elif orderlyness >= 9:
+        elif orderlyness_score >= 9:
             orderlyness = 'lawful'
-        elif orderlyness >= 6:
+        elif orderlyness_score >= 6:
             orderlyness = 'a little lawful'
         else:
             orderlyness = 'neutal'
