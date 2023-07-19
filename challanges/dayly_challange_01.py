@@ -24,6 +24,8 @@ def get_input():
 
 def find_student(students: list[str], id_val: any, id_type: bool) -> str:
     if id_type:
+        if id_val > len(students) or id_val < -1 * len(students) -1:
+            raise ValueError(f'{id_val} is out side of range ({-1 * len(students) -1}, {len(students)})')
         return students[id_val]
     if id_val in students:
         return students[students.index(id_val)]
