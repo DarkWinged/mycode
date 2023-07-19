@@ -60,16 +60,17 @@ class Question:
     def __init__(self, prompt: str, awnsers:dict[str: tuple[str, tuple[int, int]]]):
         self.prompt = prompt
         self.awnsers = awnsers
-
+        self.valid = []
+        for key in awnsers.keys():
+            self.valid.append(key.lower())
     def awnser_question(self, player: Player):
         invalid = True
-        valid = ['a', 'b', 'c', 'd']
         while invalid:
             print(self.prompt)
             for key in self.awnsers.keys():
                 print(f'{key}) {self.awnsers[key][0]}')
             player_awnser = input('>').strip().lower()
-            if player_awnser in valid:
+            if player_awnser in self.valid:
                 player.update_alignment(self.awnsers[player_awnser][1])
                 invalid = False
 
@@ -109,7 +110,6 @@ def init():
             'a': ('give them a coin', (3,3)),
             'b': ('share your rations', (0,3)),
             'c': ('beat them up', (-3,-3)),
-            'd': ('ignore them', (0,0))
             } 
     questions.append(Question(prompt, awnsers))
     prompt = 'A wizard is asking for fresh bodies for study. What do you do?'
