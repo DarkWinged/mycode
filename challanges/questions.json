@@ -1,0 +1,48 @@
+{
+    "questions": [
+        {
+            "prompt": "A young noble is beating their servant for failing some task. What do you do?",
+            "awnsers": {
+                "a": ["beat the noble and save the servant", [-3,3]],
+                "b": ["distact the noble alowing the servant to recover", [0,3]],
+                "c": ["offer to show the noble how to properly dicipline a servant", [3,0]],
+                "d": ["kill the servant to serve as an example to the other servants", [0,-3]]
+            }
+        }, 
+        {
+            "prompt": "An orphanage is burning. What do you do?",
+            "awnsers": {
+                "a": ["rush in and save the orphans", [-3,3]],
+                "b": ["organize the townsfolk to putout the fire", [3,3]],
+                "c": ["revel in the destruction", [0,-3]],
+                "d": ["start more fires", [-3,-3]]
+            }
+        }, 
+        {
+            "prompt": "A beggar comes up to you on the side of the road asking for alms. What do you do?",
+            "awnsers": {
+                "a": ["give them a coin", [3,3]],
+                "b": ["share your rations", [0,3]],
+                "c": ["beat them up", [-3,-3]]
+            }
+        }, 
+        {
+            "prompt": "A wizard is asking for fresh bodies for study. What do you do?",
+            "awnsers": {
+                "a": ["accuse him of being a necromancer and report him to the local lord", [3,3]],
+                "b": ["steal corpses form the cemetery", [-3,0]],
+                "c": ["negotiate a deal with the local lord to \"dispose\" of the bodies of executed criminals", [3, 0]],
+                "d": ["murder an innocent villager", [0,-3]]
+            }
+        },
+        {
+            "prompt": "A dragon is terrorizing a nearby village. What do you do?",
+            "awnsers": {
+                "a": ["gather you allies and slay the dargon", [3,3]],
+                "b": ["offer a treasure as tribute to dragon in exchange for the village's safety", [0,3]],
+                "c": ["sacrafice a young prince to the dragon in exchange for power", [0, -3]],
+                "d": ["use your bardic charm to seduce the dragon <3", [-3,0]]
+            } 
+        }
+    ]
+}

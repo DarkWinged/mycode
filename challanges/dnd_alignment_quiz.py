@@ -3,6 +3,7 @@
 James L. Rogers | github.com/DarkWinged
 """
 
+import json
 
 #Stores the player's name and their score.
 #Has methods to update and print a playe's score.
@@ -44,7 +45,7 @@ class Player:
         goodness = self.format_score(goodness_score, ['evil','good'])
         orderlyness = self.format_score(orderlyness_score, ['chaotic','lawful'])
 
-        print(f'{self.name} is {orderlyness} {goodness}')
+        print(f'{self.name}\'s alignment is {orderlyness} {goodness}')
 
 
 #Stores a prompt and the valid awnsers to the prompt.
@@ -69,61 +70,22 @@ class Question:
                 invalid = False
 
 
-#Todo: Import question data from *.Json
+#import question data from questions.Json
+def import_questions() -> list[any]:
+    with open('questions.json') as question_file:
+        #pprint(json.load(question_file))
+        return json.load(question_file)['questions']
 
 #initalizes and returns a question list.
-"""
-new questions can be added by following this template: 
-    prompt = 'Blah bla, bla bla... Blah. What do you do?'
-    awnsers = {
-            'a': ('blah', (orderly: int, goodly: int)),
-            'b': ('blah', (orderly: int, goodly: int)),
-            'c': ('blah', (orderly: int, goodly: int)),
-            'd': ('blah', (orderly: int, goodly: int))
-            } 
-    questions.append(Question(prompt, awnsers))
-"""
 def init():
     questions = []
-    prompt = 'A young noble is beating their servant for failing some task. What do you do?'
-    awnsers = {
-            'a': ('beat the noble and save the servant', (-3,3)),
-            'b': ('distact the noble alowing the servant to recover', (0,3)),
-            'c': ('offer to show the noble how to properly dicipline a servant', (3,0)),
-            'd': ('kill the servant to serve as an example to the other servants', (0,-3))
-            } 
-    questions.append(Question(prompt, awnsers))
-    prompt = 'An orphanage is burning. What do you do?'
-    awnsers = {
-            'a': ('rush in and save the orphans', (-3,3)),
-            'b': ('organize the townsfolk to putout the fire', (3,3)),
-            'c': ('revel in the destruction', (0,-3)),
-            'd': ('start more fires', (-3,-3))
-            } 
-    questions.append(Question(prompt, awnsers))
-    prompt = 'A beggar comes up to you on the side of the road asking for alms. What do you do?'
-    awnsers = {
-            'a': ('give them a coin', (3,3)),
-            'b': ('share your rations', (0,3)),
-            'c': ('beat them up', (-3,-3)),
-            } 
-    questions.append(Question(prompt, awnsers))
-    prompt = 'A wizard is asking for fresh bodies for study. What do you do?'
-    awnsers = {
-            'a': ('accuse him of being a necromancer and report him to the local lord', (3,3)),
-            'b': ('steal corpses form the cemetery', (-3,0)),
-            'c': ('negotiate a deal with the local lord to "dispose" of the bodies of executed criminals', (3, 0)),
-            'd': ('murder an innocent villager', (0,-3))
-            } 
-    questions.append(Question(prompt, awnsers))
-    prompt = 'A dragon is terrorizing a nearby village. What do you do?'
-    awnsers = {
-            'a': ('gather you allies and slay the dargon', (3,3)),
-            'b': ('offer a treasure as tribute to dragon in exchange for the village\s safety', (0,3)),
-            'c': ('sacrafice a young prince to the dragon in exchange for power', (0, -3)),
-            'd': ('use your bardic charm to seduce the dragon <3', (-3,0))
-            } 
-    questions.append(Question(prompt, awnsers))
+    new_questions = import_questions()
+    for question in new_questions:
+        prompt = question['prompt']
+        awnsers = {}
+        for key in question['awnsers'].keys():
+            awnsers[key] = (question['awnsers'][key][0], (question['awnsers'][key][1][0], question['awnsers'][key][1][1]))
+        questions.append(Question(prompt, awnsers))
     return questions
 
 
