@@ -2,7 +2,10 @@
 
 class Player:
     def __init__(self):
-        self.name = input('Who are you?\n>')
+        name = ''
+        while name = '':
+            name = input('Who are you?\n>')
+        self.name = name
         self.alignment = (0, 0)
 
     def update_alignment(self, change: tuple[int, int]):
@@ -59,8 +62,8 @@ class Question:
             print(self.prompt)
             for key in self.awnsers.keys():
                 print(f'{key}) {self.awnsers[key][0]}')
-            player_awnser = input('>')
-            if player_awnser.lower() in valid:
+            player_awnser = input('>').strip().lower()
+            if player_awnser in valid:
                 player.update_alignment(self.awnsers[player_awnser][1])
                 invalid = False
 
