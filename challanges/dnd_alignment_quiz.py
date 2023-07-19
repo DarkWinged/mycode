@@ -96,6 +96,7 @@ def init():
     return questions
 
 if __name__ == '__main__':
+    print('<----->D&D ALIGNMENT QUIZ<----->')
     questions = init()
     player = Player()
     for question in questions:
