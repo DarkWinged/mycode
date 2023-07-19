@@ -3,13 +3,13 @@
 import random
 from time import ctime
 
-def init():
+def init() -> tuple[list[str],list[str]]:
     wordbank= ["indentation", "spaces"]
     tlgstudents= ['Alex', 'Benji', 'Cayla', 'Demetra', 'Derek', 'Deshawn', 'James', 'Maria', 'Marylyn', 'Nor', 'Sal', 'Sammy']
     wordbank.append(4)
     return wordbank, tlgstudents
 
-def get_input():
+def get_input() -> tuple[any, bool]:
     num = input('Which studen are we talking about?\n>')
     num_strs = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
     is_int = False
