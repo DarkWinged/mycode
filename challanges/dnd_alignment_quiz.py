@@ -58,6 +58,7 @@ class Question:
         self.valid = []
         for key in awnsers.keys():
             self.valid.append(key.lower())
+
     def awnser_question(self, player: Player):
         invalid = True
         while invalid:
