@@ -88,7 +88,12 @@ def search_api(api:URL):
         if user_input == 'quit':
             quit()
         search = search_results(inital_search, user_input)
-        if len(search) == 1 and search[0]['index'] == user_input:
+        addresses = [spell['index'] for spell in search]
+        if len(search) == 1 and user_input in addresses:
+            spell = make_request(api.append(user_input))
+            print_spell(spell)
+            continue
+        if user_input in addresses:
             spell = make_request(api.append(user_input))
             print_spell(spell)
             continue
