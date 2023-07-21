@@ -1,4 +1,9 @@
 #!/usr/bin/env python3
+"""
+James L. Rogers | github.com/DarkWinged
+solution to lab_35
+"""
+
 
 def load_data() -> list[str]:
     with open('keystone.common.wsgi') as file:
