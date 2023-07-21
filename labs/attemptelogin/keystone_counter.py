@@ -16,7 +16,7 @@ def process_data(data: list[str]) -> tuple[int,list[str],int]:
     for entry in data:
         if 'failed' in entry:
             fail_ip.append(entry.split()[-1])
-        elif 'post' in entry:
+        elif 'POST' in entry:
             sucess += 1
 
     return fail_ip, sucess
