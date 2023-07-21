@@ -3,6 +3,7 @@
 def load_data() -> list[str]:
     with open('keystone.common.wsgi') as file:
         return file.readlines()
+
 def process_data(data: list[str]) -> tuple[int,list[str],int]:
     fail_ip = []
     sucess = 0
@@ -14,6 +15,7 @@ def process_data(data: list[str]) -> tuple[int,list[str],int]:
             sucess += 1
 
     return fail_ip, sucess
+
 
 if __name__ == "__main__":
     ips, sucesses = process_data(load_data())
