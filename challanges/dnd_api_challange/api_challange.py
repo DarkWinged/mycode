@@ -59,9 +59,9 @@ def print_spell(spell: dict[str:any]):
     print_all(spell['components'], ending='', end_all=']\n')
     if 'M' in spell['components']:
         print(f'\tRequired materials: {spell["material"]}')
-    print()
 
-    print_all(spell['desc'])
+    print('\n', end='\t')
+    print_all(spell['desc'], ending='\n\t')
     
     print(f'Range: {spell["range"]}')
     if 'damage' in spell.keys():
@@ -78,8 +78,10 @@ def print_spell(spell: dict[str:any]):
     if 'dc' in spell.keys():
         print(f'\tSave: {spell["dc"]["dc_type"]["name"]}')
         print(f'\tSpell effect on save: {spell["dc"]["dc_success"]}')
-
-    print_all(spell['higher_level'])
+    
+    if 'higher_level' in spell.keys():
+        print(end='\t')
+        print_all(spell['higher_level'])
 
 def search_api(api:URL):
     inital_search = make_request(api.url)['results']
