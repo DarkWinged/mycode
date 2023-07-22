@@ -11,16 +11,40 @@ import argparse
 def load_signature_from_rc_file(user_override=None, contact_override=None):
     signature = ''
     rc_file_path = os.path.expanduser("~/.newpyrc")
-    if os.path.exists(rc_file_path):
-        with open(rc_file_path, 'r') as rc_file:
-            for line in rc_file:
-                key, value = line.strip().split(' ', 1)
-                if key == "user":
-                    user_name = user_override if user_override else value.strip()
-                elif key == "contact":
-                    contact_info = contact_override if contact_override else value.strip()
-            signature = f"#{user_name}|{contact_info}"
+    if not os.path.exists(rc_file_path):
+        create_default_rc_file(rc_file_path)
+    with open(rc_file_path, 'r') as rc_file:
+        for line in rc_file:
+            line = line.strip()
+            if not line or line.startswith("#"):
+                continue
+            key, value = line.split(' ', 1)
+            if key == "user":
+                user_name = user_override if user_override else value.strip()
+            elif key == "contact":
+                contact_info = contact_override if contact_override else value.strip()
+        signature = f"#{user_name}|{contact_info}"
     return signature
+
+def create_default_rc_file(rc_file_path):
+    default_content = '''# Configure user and contact for Python file signature
+# Format:
+# user {username}
+# contact {contact}
+#
+# Example:
+# user John Doe
+# contact john.doe@example.com
+#
+# You can use this file to set the default signature for newly created Python files.
+# To use the default, leave the fields blank when using the script.
+
+
+'''
+    with open(rc_file_path, 'w') as rc_file:
+        rc_file.write(default_content)
+
+    os.system(f'vim {os.path.expanduser("~/.newpyrc")}') 
 
 def create_directory_if_not_exists(path):
     file_parent_dir = os.path.dirname(path)
@@ -86,6 +110,7 @@ if __name__ == "__main__":
     parser.add_argument("-c", "--contact", dest="contact_override", type=str, help="Override the contact info in the signature comment")
     parser.add_argument("-o", "--update-rc", action="store_true", help="Update ~/.newpyrc with the signature overrides")
     args = parser.parse_args()
+
     print('starting newpy')
     if args.update_rc:
         update_rc_file(args.user_override, args.contact_override)
