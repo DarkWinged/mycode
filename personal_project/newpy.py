@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 
-# Signature: 
 # Author: ChatGPT
 # Created: July 2023
 # Description: Python script generator with custom signature comments.
@@ -41,10 +40,10 @@ def create_default_rc_file(rc_file_path):
 
 
 '''
+
     with open(rc_file_path, 'w') as rc_file:
         rc_file.write(default_content)
-
-    os.system(f'vim {os.path.expanduser("~/.newpyrc")}') 
+    os.system(f'vim {rc_file_path}') 
 
 def create_directory_if_not_exists(path):
     file_parent_dir = os.path.dirname(path)
@@ -52,18 +51,11 @@ def create_directory_if_not_exists(path):
         os.system(f'mkdir -p {file_parent_dir}')
 
 def create_python_file(path, user_override, contact_override):
-    expanded_path = os.path.expanduser(path)
-
-    if expanded_path.startswith("/"):
-        pass
-    elif expanded_path.startswith("./"):
-        expanded_path = expanded_path[2:]
-    elif expanded_path.startswith("../"):
-        current_dir = os.path.abspath(os.path.curdir)
-        expanded_path = os.path.join(current_dir, expanded_path[3:])
-    else:
-        pass
-
+    expanded_path = os.path.expanduser(os.path.normpath(path))
+        
+    if not expanded_path.endswith('.py'):
+        expanded_path += '.py'
+        
     signature = load_signature_from_rc_file(user_override, contact_override)
 
     file_content = f"""#! /usr/bin/env python3
