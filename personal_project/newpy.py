@@ -87,25 +87,36 @@ def update_rc_file(user_override, contact_override):
 
     with open(rc_file_path, 'w') as rc_file:
         for line in lines:
-            key, value = line.strip().split(' ', 1)
-            if key == "user":
-                rc_file.write(f"user {user_override if user_override else value.strip()}\n")
-            elif key == "contact":
-                rc_file.write(f"contact {contact_override if contact_override else value.strip()}\n")
+            if line != '' or line != '\n':
+                if line.startswith('#'):
+                    rc_file.write(line)
+                    continue
+                key, value = line.strip().split(' ', 1)
+                if key == "user":
+                    rc_file.write(f"user {user_override if user_override else value.strip()}\n")
+                elif key == "contact":
+                    rc_file.write(f"contact {contact_override if contact_override else value.strip()}\n")
+                else:
+                    rc_file.write(f'{key} {value}\n')
 
     print(f"Updated ~/.newpyrc with user: {user_override}, contact: {contact_override}")
 
 if __name__ == "__main__":
+    
     parser = argparse.ArgumentParser(description="Create a new Python file with custom signature comment.")
-    parser.add_argument("path", type=str, help="Path where you want to create the Python file")
+    parser.add_argument("path", nargs='?', type=str, help="Path where you want to create the Python file")
     parser.add_argument("-u", "--user", dest="user_override", type=str, help="Override the user name in the signature comment")
     parser.add_argument("-c", "--contact", dest="contact_override", type=str, help="Override the contact info in the signature comment")
     parser.add_argument("-o", "--update-rc", action="store_true", help="Update ~/.newpyrc with the signature overrides")
     args = parser.parse_args()
 
-    print('starting newpy')
-    if args.update_rc:
-        update_rc_file(args.user_override, args.contact_override)
-    else:
+    if args.path:
+        if args.update_rc:
+            update_rc_file(args.user_override, args.contact_override)
         create_python_file(args.path, args.user_override, args.contact_override)
+    else:
+        if args.update_rc:
+            update_rc_file(args.user_override, args.contact_override)
+        else:
+            print("Please provide a path to create the Python file or use the -h/--help option for more information.")
 
