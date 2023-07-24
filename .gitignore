@@ -1,0 +1,6 @@
+*.swp
+bin/*
+lib/*
+lib64
+*.cfg
+personal_project/testing/tests/*
