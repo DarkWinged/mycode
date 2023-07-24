@@ -27,6 +27,7 @@ class Item(ABC):
 
 @dataclass
 class Creature_data:
+    name: str
     hp: int
     strength: int
     dextarity: int
@@ -37,22 +38,30 @@ class Creature_data:
 
 
 class Armor(Item):
-    def __init__(self, armor_value):
+    def __init__(self, armor_value, max_dex):
         self.defence = armor_value
+        self.max_dex = max_dex
 
-    def use(self) -> int:
-        return self.defence
+    def use(self, user_dex:int) -> int:
+        if self.max_dex:
+            return self.defence + (self.max_dex if user_dex > self.max_dex else user_dex )
+        return self.defence + user_dex
 
 
 class Weapon(Item):
-    def __init__(self, dice_size):
-        self.damge_dice
+    def __init__(self, dice_count: int, dice_size: int, modifier: int):
+        self.total_dice = dice_count
+        self.damge_dice = dice_size
+        self.damage_mod = modifier
 
     def use(self) -> int:
-        damage = math.floor((100 * random())%self.damge_dice)
-        if damage < 1:
-            return 1
-        return damage
+        total_damage = self.damage_mod
+        for dice in range(self.total_dice):
+            damage = math.floor((100 * random())%self.damge_dice)
+            if damage < 1:
+                return 1
+            total_damage += damage
+        return total_damage
 
 
 class Consumeable(Item):
@@ -133,10 +142,11 @@ class Hero(Creature):
         target.defend(attack, damage)
         
     def defend(self, attack:int, damage:int):
-        defense = self.dextarity
         if self.armor is not None:
-            defence += self.armor.use()
-        if defense <= attack:
+            defence += self.armor.use(self.dextarity)
+        else:
+            defence = self.dextarity
+        if defence <= attack:
             self.hp_current -= damage
        
     def equip(self, inventory_item: int):
