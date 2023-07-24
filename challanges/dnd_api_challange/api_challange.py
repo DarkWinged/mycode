@@ -64,6 +64,8 @@ def print_spell(spell: dict[str:any]):
     print_all(spell['desc'], ending='\n\t')
     
     print(f'Range: {spell["range"]}')
+    if 'area_of_effect' in spell.keys():
+        print(f'AoE: {spell["area_of_effect"]["size"]}ft {spell["area_of_effect"]["type"]}')
     if 'damage' in spell.keys():
         if spell['level'] == 0:
             spell_damage_level = '1'
