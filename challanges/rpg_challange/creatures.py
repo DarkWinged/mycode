@@ -52,10 +52,10 @@ class Hero(Creature):
         self.intellegenct = data.intellegenct
         self.wisdom = data.wisdom
         self.charisma = data.charisma
-        self.armor = data.armor
-        self.weapon = data.weapon
-        self.potions = data.potions
-        self.inventory = data.inventory
+        self.armor = None
+        self.weapon = None
+        self.potions = []
+        self.inventory = []
  
     def initive(self):
         return math.floor((100 * random()) % 20) + self.dextarity

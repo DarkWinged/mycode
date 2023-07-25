@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from data_types import Armor_data, Weapon_data, Consumeable_data
 
 class Item(ABC):
 
@@ -7,9 +8,10 @@ class Item(ABC):
 
 
 class Armor(Item):
-    def __init__(self, armor_value: int, max_dex: int):
-        self.defence = armor_value
-        self.max_dex = max_dex
+    def __init__(self, data: Armor_data):
+        self.name = ' '.join(data.name.split('_')).capitalize()
+        self.defence = data.armor_value
+        self.max_dex = data.max_dex
 
     def use(self, user_dex:int) -> int:
         if self.max_dex:
@@ -18,10 +20,11 @@ class Armor(Item):
 
 
 class Weapon(Item):
-    def __init__(self, dice_count: int, dice_size: int, modifier: int):
-        self.total_dice = dice_count
-        self.damge_dice = dice_size
-        self.damage_mod = modifier
+    def __init__(self, data: Weapon_data):
+        self.name = ' '.join(data.name.split('_')).capitalize()
+        self.total_dice = data.dice_count
+        self.damge_dice = data.dice_size
+        self.damage_mod = data.modifier
 
     def use(self) -> int:
         total_damage = self.damage_mod
@@ -34,16 +37,17 @@ class Weapon(Item):
 
 
 class Consumeable(Item):
-    def __init__(self, benefical: bool, dice_size: int):
-        self.benefical = effect
-        self.dice_size = dice_size
+    def __init__(self, data: Consumeable_data):
+        self.name = ' '.join(data.name.split('_')).capitalize()
+        self.beneficial = data.beneficial
+        self.dice_size = data.dice_size
 
 
     def use(self):
         effect = math.floor((100 * random()) % self.dice_size)
         if effect < 1:
             effect = 1
-        if self.benefical:
+        if self.beneficial:
             return effect
         return -1 * effect
 

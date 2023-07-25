@@ -1,18 +1,25 @@
 def get_input(prompt: str, options: list[str], *args, enum=False, numeral=True) -> str:
     while True:
         try:
+            prompt_parts = prompt.split('\n')
             if enum:
                 numbers = ['0','1','2','3','4','5','6','7','8','9']
                 for index, option in enumerate(options):
-                    print(f'{index}) {option.capitalize()}')
-            
-                response = input(prompt).strip().lower()
+                    prompt_parts.append(f'{index}) {option.capitalize()}')
+                
+                prompt_parts.append('> ')
+
+                response = input('\n'.join(prompt_parts)).strip().lower()
 
                 if response == 'quit':
                     raise SystemExit()
                 
-                if response in options:
-                    return option
+                if numeral:
+                    if response in options:
+                        return options.index(response)
+                else:
+                    if response in options:
+                        return response
 
                 if response[0] in numbers:
                     response = int(response)
@@ -24,17 +31,20 @@ def get_input(prompt: str, options: list[str], *args, enum=False, numeral=True) 
                         return options[response]
             else:
                 for option in options:
-                    print(option.capitalize())
+                    prompt_parts.append(option.capitalize())
+                
+                prompt_parts.append('> ')
 
-                response = input(prompt).strip().lower()
+                response = input('\n'.join(prompt_parts)).strip().lower()
 
                 if response == 'quit':
                     raise SystemExit()
                 
                 if response in options:
-                    return option
+                    return response
             raise ValueError()
         except SystemExit:
+            quit(1)
             break
         except:
             print('Invalid Option')

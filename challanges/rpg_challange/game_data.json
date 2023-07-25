@@ -1,6 +1,6 @@
 {
-    "Monsters":{
-        "Slime":{
+    "monsters":{
+        "slime":{
             "hp":6,
             "strength":2,
             "dextarity":5,
@@ -9,7 +9,7 @@
             "wisdom":-2,
             "charisma":-2
         },
-        "Skeleton":{
+        "skeleton":{
             "hp":8,
             "strength":4,
             "dextarity":10,
@@ -18,7 +18,7 @@
             "wisdom":-2,
             "charisma":-2
         },
-        "Goblin":{
+        "goblin":{
             "hp":4,
             "strength":4,
             "dextarity":14,
@@ -28,7 +28,7 @@
             "charisma":-2
         }
     },
-    "armor":{
+    "armors":{
         "chainmail":{
             "armor_value":6,
             "max_dex":8
@@ -45,37 +45,37 @@
     "weapons":{
         "longsword":{
             "dice":"1d8",
-            "modifer":0
+            "modifier":0
         },
         "magic_longsword":{
             "dice":"1d8",
-            "modifer":1
+            "modifier":1
         },
         "dagger":{
             "dice":"1d4",
-            "modifer":0
+            "modifier":0
         },
         "dual_daggers":{
             "dice":"2d4",
-            "modifer":0
+            "modifier":0
         },
         "wand_of_fireball":{
             "dice":"6d6",
-            "modifer":0
+            "modifier":0
         }
     },
     "consumeables":{
         "lesser_healing":{
-            "benefical":true,
+            "beneficial":true,
             "dice_size":8
         },
         "alchemest_fire":{
-            "benefical":false,
+            "beneficial":false,
             "dice_size":20
         }
     },
-    "Jobs":{
-        "Fighter":{
+    "jobs":{
+        "fighter":{
             "hp":8,
             "strength":6,
             "dextarity":6,
@@ -88,7 +88,7 @@
             "potions":["lesser_healing", "lesser_healing", "alchemest_fire"],
             "inventory": []
         },
-        "Rouge":{
+        "rouge":{
             "hp":6,
             "strength":2,
             "dextarity":12,
@@ -101,7 +101,7 @@
             "potions":["lesser_healing", "lesser_healing", "alchemest_fire"],
             "inventory": []
         },
-        "Wizard":{
+        "wizard":{
             "hp":4,
             "strength":2,
             "dextarity":6,
