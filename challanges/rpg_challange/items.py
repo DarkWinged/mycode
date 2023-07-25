@@ -7,7 +7,7 @@ class Item(ABC):
 
 
 class Armor(Item):
-    def __init__(self, armor_value, max_dex):
+    def __init__(self, armor_value: int, max_dex: int):
         self.defence = armor_value
         self.max_dex = max_dex
 
@@ -34,7 +34,7 @@ class Weapon(Item):
 
 
 class Consumeable(Item):
-    def __init__(self, effect: bool, dice_size: int):
+    def __init__(self, benefical: bool, dice_size: int):
         self.benefical = effect
         self.dice_size = dice_size
 

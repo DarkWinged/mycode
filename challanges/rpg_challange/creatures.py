@@ -1,3 +1,11 @@
+from __future__ import annotations
+from abc import ABC, abstractmethod
+import data_types
+import menues
+from random import random
+from random import seed as seed_random
+
+
 class Creature(ABC):
      
     @abstractmethod
@@ -95,12 +103,12 @@ class Hero(Creature):
     def use_potion(self, target: Creature, slot: int):
         potion = self.potions.pop[slot]
         if potion.benefical and target is not self:
-            choice = get_input('Are you sure you want to do this?\n> ', ['y','n'])
+            choice = menues.get_input('Are you sure you want to do this?\n> ', ['y','n'])
             if choice == 'y':
                 target.hp_current += potion.use()
                 self.potions.pop(slot)
         elif not potion.benefical and target is self:
-            choice = get_input('Are you sure you want to do this?\n> ', ['y','n'])
+            choice = menues.get_input('Are you sure you want to do this?\n> ', ['y','n'])
             if choice == 'y':
                 target.hp_current += potion.use()
                 self.potions.pop(slot)
