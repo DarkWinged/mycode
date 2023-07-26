@@ -19,9 +19,7 @@ def authenticate_request(url:str):
     pub_key, private_key = get_keys()
     time_stamp = str(time())
     hash_key = get_hash(time_stamp, private_key, pub_key)
-    authed_url = f'{url}&ts={time_stamp}&apikey={pub_key}&hash={hash_key}'
-    print(authed_url)
-    return authed_url
+    return f'{url}&ts={time_stamp}&apikey={pub_key}&hash={hash_key}'
 
 def make_request(authenticated_url:str) -> dict[any]:
     response = requests.get(authenticated_url)
@@ -32,7 +30,13 @@ def make_request(authenticated_url:str) -> dict[any]:
 
 def main():
     base_url='http://gateway.marvel.com/v1/public/'
-    pprint(make_request(authenticate_request(base_url+'comics'+'?')))
+    user_input = ''
+    while user_input != 'quit':
+        user_input = input('What would you like to search?\n> ').strip().lower()
+        if user_input == 'quit':
+            break
+        pprint(make_request(authenticate_request(base_url+user_input+'?')))
+
 
 
 if __name__ == '__main__':
