@@ -34,7 +34,9 @@ def main():
         user_input = input('What would you like to search?\n> ').strip().lower()
         if user_input == 'quit':
             break
-        pprint(make_request(authenticate_request(base_url+user_input+'?')))
+        if '?' not in user_input:
+            user_input = f'{user_input}?'
+        pprint(make_request(authenticate_request(f'{base_url}{user_input}')))
 
 
 
