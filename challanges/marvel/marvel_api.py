@@ -12,13 +12,12 @@ def get_keys() -> tuple[str,str]:
         private_key = creds.readline().strip()
         return pub_key, private_key
 
-def get_hash(ts: str, private: str, public: str):
-    return hashlib.md5(f'{ts}{private}{public}'.encode('utf-8')).hexdigest()
+def get_hash(ts: str):
+    return hashlib.md5(f'{ts}{private_key}{pub_key}'.encode('utf-8')).hexdigest()
 
 def authenticate_request(url:str):
-    pub_key, private_key = get_keys()
     time_stamp = str(time())
-    hash_key = get_hash(time_stamp, private_key, pub_key)
+    hash_key = get_hash(time_stamp)
     return f'{url}&ts={time_stamp}&apikey={pub_key}&hash={hash_key}'
 
 def make_request(authenticated_url:str) -> dict[any]:
@@ -40,5 +39,6 @@ def main():
 
 
 if __name__ == '__main__':
+    pub_key, private_key = get_keys()
     main()
 
