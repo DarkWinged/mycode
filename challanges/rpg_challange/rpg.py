@@ -1,7 +1,7 @@
 #! /usr/bin/env python3
 #James L. Rogers|github.com/DarkWinged
 
-import menues
+import menus
 import creatures
 from data_types import Creature_data, Armor_data, Weapon_data, Consumeable_data, Job_data
 import json
@@ -83,7 +83,7 @@ def init():
 def main_menu(database: dict[str, dict[str, any]]):
     menu_options=['new game', 'view database', 'exit']
     while True:
-        choice = menues.get_input('!!!RPG GAME!!!', menu_options, enum=True)
+        choice = menus.get_input('!!!RPG GAME!!!', menu_options, enum=True)
         print(choice)
         if choice == 0:
             pass
@@ -93,13 +93,13 @@ def main_menu(database: dict[str, dict[str, any]]):
             return
 
 def view_database(database: dict[str, dict[str: any]]):
-    database_section = menues.get_input('View game data:', list(database.keys()))
-    choice = menues.get_input(f'View {database_section.removesuffix("s")} data:', list(database[database_section].keys()))
+    database_section = menus.get_input('View game data:', list(database.keys()))
+    choice = menus.get_input(f'View {database_section.removesuffix("s")} data:', list(database[database_section].keys()))
     pprint(database[database_section][choice])
 
 
 if __name__ == '__main__':
-    confirm = menues.get_input('Would you like to play a game?', ['y','n'])
+    confirm = menus.get_input('Would you like to play a game?', ['y','n'])
     if confirm:
        database  = init()
        main_menu(database) 

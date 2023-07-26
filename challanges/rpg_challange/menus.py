@@ -46,6 +46,6 @@ def get_input(prompt: str, options: list[str], *args, enum=False, numeral=True) 
         except SystemExit:
             quit(1)
             break
-        except:
+        except ValueError:
             print('Invalid Option')
         print('Enter "quit" to quit the game')

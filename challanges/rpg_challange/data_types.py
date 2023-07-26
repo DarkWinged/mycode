@@ -41,5 +41,5 @@ class Hero_data:
 
 
 @dataclass
-class Job_data(Creature_data, Hero_data): pass
+class Job_data(Hero_data, Creature_data): pass
 
