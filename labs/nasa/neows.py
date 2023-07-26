@@ -32,7 +32,7 @@ def calculate_rank(volume, speed_kph, miss_distance_k):
     # Calculate the rank score
     rank_score = (
         volume_weight * volume +
-        speed_weight * (1 / speed_kph) +
+        speed_weight * speed_kph +
         distance_weight * (1 / miss_distance_k)
     )
 
@@ -95,6 +95,7 @@ def main():
         pprint(hazard['close_approach_data'])
         print('}')'''
     pprint(sorted_hazards[0])
+    pprint(sorted_hazards[-1])
 
     ## display NASAs NEOW data
     #pprint(neodata['near_earth_objects']['2019-11-18'][0].keys())
