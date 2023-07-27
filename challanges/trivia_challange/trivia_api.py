@@ -54,7 +54,6 @@ def main():
     # data will be a python dictionary rendered from your API link's JSON!
     print(url)
     data = requests.get(url).json()['results']
-    pprint(data)    
     questions = [Question(quest) for quest in data]
     for question in questions:
         question.ask()
