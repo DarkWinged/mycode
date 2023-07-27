@@ -1,0 +1,70 @@
+#! /usr/bin/env python3
+#James L. Rogers|github.com/DarkWinged
+
+import sys
+import select
+import eventlet
+from eventlet import timeout
+from flask import Flask, render_template
+from flask_socketio import SocketIO, send
+
+eventlet.monkey_patch()
+
+app = Flask(__name__)
+app.config['SECRET_KEY'] = 'secret!'
+socketio = SocketIO(app, async_mode='eventlet')
+
+connected_clients = 0
+
+@socketio.on('connect')
+def handle_connect():
+    global connected_clients
+    connected_clients += 1
+    print('Client connected. Total connected clients:', connected_clients)
+
+@socketio.on('disconnect')
+def handle_disconnect():
+    global connected_clients
+    connected_clients -= 1
+    print('Client disconnected. Total connected clients:', connected_clients)
+
+@socketio.on('message')
+def handle_message(data):
+    print('Received message from client:', data)
+    send(data, broadcast=True)
+
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+def print_server_status():
+    global connected_clients
+    while True:
+        print('Current server status: Active')
+        print('Total connected clients:', connected_clients)
+        eventlet.sleep(10)  # Print every minute (60 seconds)
+
+def listen_for_admin_commands():
+    while True:
+        ready, _, _ = select.select([sys.stdin], [], [], 0.1)
+
+        if ready:
+            command = sys.stdin.readline().strip()
+            if command.lower() == 'quit':
+                print('Shutting down the server...')
+                socketio.stop()
+                break
+            elif command.lower() == 'help':
+                print('[quit] shutsdown the server.')
+        eventlet.sleep(0.1)
+
+if __name__ == '__main__':
+    status_greenlet = eventlet.spawn(print_server_status)
+    admin_greenlet = eventlet.spawn(listen_for_admin_commands)
+
+    socketio.run(app, host='0.0.0.0', port=5000)
+
+    status_greenlet.kill()  # Kill the status greenlet
+    admin_greenlet.kill()   # Kill the admin greenlet
+
+
