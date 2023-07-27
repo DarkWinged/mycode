@@ -30,7 +30,7 @@ class Question:
         
     def ask(self):
         self.shuffle()
-        choice = menus.get_input(self.prompt, self.options)
+        choice = menus.list_menu(self.prompt, self.options)
         if choice == self.awnser.lower():
             print('Correct!')
         else:
@@ -41,9 +41,9 @@ def main():
     dificulties = ['Easy', 'Medium', 'Hard']
     question_types = ['Any', 'Multiple', 'T/F']
     url = f'{BASE_URL}?amount=10'
-    catagory_selection = menus.get_input('Select a Catagory', catagories, enum=True) + 9
-    dificulty_selection = menus.get_input('Select a dificulty level', dificulties)
-    q_type = menus.get_input('Select a question type', question_types, enum=True)
+    catagory_selection = int(menus.list_menu('Select a Catagory', catagories, enum=True)) + 9
+    dificulty_selection = menus.list_menu('Select a dificulty level', dificulties)
+    q_type = menus.list_menu('Select a question type', question_types, enum=True)
     if q_type == 0:
         q_type_selection = ''
     elif q_type == 1:
@@ -54,6 +54,7 @@ def main():
     # data will be a python dictionary rendered from your API link's JSON!
     print(url)
     data = requests.get(url).json()['results']
+    pprint(menus.dict_menu(url, data[0]))
     questions = [Question(quest) for quest in data]
     for question in questions:
         question.ask()
