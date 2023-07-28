@@ -1,0 +1,25 @@
+<!-- templates/login_signup.html -->
+{% extends "base.html" %}
+
+{% block title %}{{ form['title'] }}{% endblock %}
+
+{% block header %}
+    <h1>{{ form['title'] }}</h1>
+    {% if message %}
+        <p style="color: red;">{{ message }}</p>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <form action="{{ url_for(form['switch_route']) }}" method="get">
+        <button type="submit">{{ form['switch_text'] }}</button>
+    </form>
+    <form action="{{ request.path }}" method="post">
+        {% for field in form['fields'] %}
+            <label for="{{ field['name'] }}">{{ field['label'] }}</label>
+            <input type="{{ field['type'] }}" id="{{ field['name'] }}" name="{{ field['name'] }}" {% if field['required'] %}required{% endif %}><br>
+        {% endfor %}
+        <button type="submit" name="button_clicked" value="{{ form['button_text'].lower() }}">{{ form['button_text'] }}</button>
+    </form>
+{% endblock %}
+
