@@ -46,11 +46,11 @@ if __name__ == '__main__':
     if not os.path.exists(data_base_path):
         os.makedirs(f'{data_base_path}/logins.json')
 
-    if not os.path.exists(data_base_path):
+    if not os.path.exists(f'{data_base_path}/logins.json'):
         default_admin_login = {
             "admin": "password"
         }
-        with open(data_file_path, 'w') as f:
+        with open(f'{data_base_path}/logins.json', 'w') as f:
             json.dump(default_admin_login, f)
 
     data_controller = DataController(f'{data_base_path}/logins.json')
