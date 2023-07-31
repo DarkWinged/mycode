@@ -4,10 +4,11 @@
 # app.py
 import os
 import json
+from datetime import timedelta
 from flask import Flask, render_template, request, redirect, url_for, session
 
 class DataController:
-    def __init__(self, file_path):
+    def __init__(self, file_path: str):
         self._file_path = file_path
         self._data = self._load_data()
 
@@ -22,26 +23,28 @@ class DataController:
         with open(self._file_path, 'w') as f:
             json.dump(self._data, f)
 
-    def validate_user_credentials(self, username, password):
+    def validate_user_credentials(self, username: str, password: str) -> bool:
         return self._data.get(username) == password
 
-    def add_new_account(self, new_username, new_password, confirm_password):
+    def add_new_account(self, new_username: str, new_password: str, confirm_password: str) -> tuple[bool, str]:
         if new_username in self._data:
-            return False
+            return False, 'Username already in use!'
 
         if new_password == confirm_password:
             self._data[new_username] = new_password
             self._save_data()
-            return True
+            return True , ''
 
-        return False
+        return False, 'Passwords do not match!'
 
 if __name__ == '__main__':
 
     app = Flask(__name__)
     app.secret_key = 'your_secret_key'  # Change this to a secure secret key
+    app.permanent_session_lifetime = timedelta(minutes=15)
 
     data_base_path = os.path.expanduser('~/server_data')
+
     # Create data directory and logins.json file with default admin login if they don't exist
     if not os.path.exists(data_base_path):
         os.makedirs(f'{data_base_path}/logins.json')
@@ -54,20 +57,28 @@ if __name__ == '__main__':
             json.dump(default_admin_login, f)
 
     data_controller = DataController(f'{data_base_path}/logins.json')
-
-
+    
+    @app.before_request
+    def before_request():
+        print(request.endpoint)
+        login_pages = ['login', 'signup']
+        if 'username' in session.keys():
+            print(session['username'])
+            if request.endpoint in login_pages:
+                return redirect('/')
+        else:
+            if request.endpoint not in login_pages:
+                return redirect(url_for('login'))
+    
     @app.route('/', methods=['GET'])
     def index():
-        if 'username' in session.keys():
-            username = session['username']
-            return render_template('index.html', title_text = 'Flask Game!', username=username)
-        else:
-            return redirect(url_for('login'))
+        username = session['username']
+        return render_template('index.html', title_text = 'Flask Game', username=username)
 
     @app.route('/login', methods=['GET', 'POST'])
     def login():
         form = {
-            'title': 'Flask Game!',
+            'title': 'Flask Game',
             'fields': [
                 {'label': 'Username:', 'name': 'username', 'type': 'text'},
                 {'label': 'Password:', 'name': 'password', 'type': 'password'}
@@ -92,7 +103,7 @@ if __name__ == '__main__':
     @app.route('/signup', methods=['GET', 'POST'])
     def signup():
         form = {
-            'title': 'Flask Game!',
+            'title': 'Flask Game',
             'fields': [
                 {'label': 'New Username:', 'name': 'new_username', 'type': 'text'},
                 {'label': 'New Password:', 'name': 'new_password', 'type': 'password'},
@@ -108,10 +119,11 @@ if __name__ == '__main__':
             new_password = request.form['new_password']
             confirm_password = request.form['confirm_password']
 
-            if data_controller.add_new_account(new_username, new_password, confirm_password):
+            attempt , message = data_controller.add_new_account(new_username, new_password, confirm_password)
+            if attempt:
                 return redirect(url_for('login'))
             else:
-                return render_template('login_signup.html', form=form, message="Failed to create an account. Please try again.")
+                return render_template('login_signup.html', form=form, message=f"{message} Please try again.")
 
         return render_template('login_signup.html', form=form)
 

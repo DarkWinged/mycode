@@ -4,7 +4,7 @@
 {% block title %}{{ form['title'] }}{% endblock %}
 
 {% block header %}
-    <h1>{{ form['title'] }}</h1>
+    {{ form['title'] }}
     {% if message %}
         <p style="color: red;">{{ message }}</p>
     {% endif %}
