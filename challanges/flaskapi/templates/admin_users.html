@@ -1,0 +1,54 @@
+<!-- templates/admin_users.html -->
+
+{% extends 'base.html' %}
+
+{% block title %}Admin Users{% endblock %}
+
+{% block header %}Admin Users{% endblock %}
+
+{% block content %}
+    <form action="{{ url_for('admin_users') }}" method="post">
+        <label for="search">Search:</label>
+        <input type="text" name="search" id="search" value="{{ current_search }}" required>
+        <button type="submit">Search</button>
+        <label for="limit">Limit:</label>
+        <select name="limit" id="limit">
+            {% for option in [5, 10, 25, 50, 100] %}
+                <option value="{{ option }}" {% if option == limit %}selected{% endif %}>{{ option }}</option>
+            {% endfor %}
+        </select>
+    </form>
+
+    {% if filtered_usernames %}
+        <ul>
+            {% for username in filtered_usernames %}
+                <li>{{ username }}</li>
+            {% endfor %}
+        </ul>
+
+        <div>
+            {% if current_offset > 0 %}
+                <a href="{{ url_for('admin_users', search=current_search, limit=limit, offset=0) }}">First</a>
+                <a href="{{ url_for('admin_users', search=current_search, limit=limit, offset=current_offset - limit) }}">Previous</a>
+            {% endif %}
+
+            {% for index in range(current_offset - 4 * limit, current_offset + 5 * limit + 1, limit) %}
+                {% if 0 <= index <= max_offset %}
+                    {% if index == current_offset %}
+                        <strong>{{ index // limit + 1 }}</strong>
+                    {% else %}
+                        <a href="{{ url_for('admin_users', search=current_search, limit=limit, offset=index) }}">{{ index // limit + 1 }}</a>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+
+            {% if current_offset < max_offset %}
+                <a href="{{ url_for('admin_users', search=current_search, limit=limit, offset=current_offset + limit) }}">Next</a>
+                <a href="{{ url_for('admin_users', search=current_search, limit=limit, offset=max_offset) }}">Last</a>
+            {% endif %}
+        </div>
+    {% else %}
+        <p>No users found.</p>
+    {% endif %}
+{% endblock %}
+
