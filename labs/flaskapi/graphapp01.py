@@ -43,7 +43,6 @@ def graphin():
         creds = yaml.load(sshpass)
     svruptime = []
     xtick = []
-    print(creds)
     for cred in creds:
         xtick.append(cred['ip'])
         resp = sshlogin(cred['ip'], cred['un'], cred['passw'])
