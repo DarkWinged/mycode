@@ -25,10 +25,13 @@ class LoginDataController:
             json.dump(self._data, f)
 
     def validate_user_credentials(self, username: str, password: str) -> bool:
-        return self._data.get(username)['password'] == password
+        if username in self._data.keys():
+            return self._data.get(username)['password'] == password
+        else:
+            return False
 
     def add_new_account(self, new_username: str, new_password: str, confirm_password: str) -> tuple[bool, str]:
-        if new_username in self._data:
+        if new_username in self._data.keys():
             return False, 'Username already in use!'
 
         if new_password == confirm_password:
