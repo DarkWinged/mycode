@@ -22,7 +22,7 @@
     {% if filtered_usernames %}
         <ul>
             {% for username in filtered_usernames %}
-                <li>{{ username }}</li>
+                <li><a href="{{ url_for('admin_user_options', username=username) }}">{{ username }}</a></li>
             {% endfor %}
         </ul>
 

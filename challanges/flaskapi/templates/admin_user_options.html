@@ -1,0 +1,138 @@
+<!-- templates/admin_users_username.html -->
+{% extends "base.html" %}
+
+{% block title %}Admin User Options{% endblock %}
+
+{% block header %}Administration User Options
+    {% if error %}
+    <h3>Error:</h3>
+    <p>{{ error }}</p>
+    {% endif %}
+    {% if message %}
+    <h3>Message:</h3>
+    <p>{{ message }}</p>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <h2>Administration Options for {{ username }}</h2>
+    <p>Username: {{ username }}</p>
+
+    <!-- Add the text field for the admin password at the top of the body -->
+    <label for="admin_password">Admin Password:</label>
+    <input type="password" name="admin_password" id="admin_password" placeholder="Enter Admin Password" required>
+
+    <!-- Add a form for resetting user password -->
+    <form id="reset_password_form">
+        <label for="new_password">New Password:</label>
+        <input type="password" name="new_password" id="new_password" placeholder="Enter New Password" required>
+        <label for="confirm_password">Confirm Password:</label>
+        <input type="password" name="confirm_password" id="confirm_password" placeholder="Confirm New Password" required>
+        <button type="button" onclick="resetPassword()">Reset Password</button>
+    </form>
+
+    <!-- Add a dropdown to add or remove user permissions -->
+    <label for="permissions_dropdown">User Permissions:</label>
+    <select name="permissions_dropdown" id="permissions_dropdown">
+        <option value="user">User</option>
+        <option value="moderator">Moderator</option>
+        <option value="admin">Admin</option>
+    </select>
+    <button type="button" onclick="addPermission()">Add Permission</button>
+    <button type="button" onclick="removePermission()">Remove Permission</button>
+
+<script>
+    // Function to get the admin password from the text field
+    function getAdminPassword() {
+        return document.getElementById("admin_password").value;
+    }
+
+    // Function to send the JSON data to the server
+    async function sendDataToServer(data) {
+        const adminPassword = getAdminPassword();
+
+        // Check if the admin password is filled
+        if (adminPassword) {
+            // Include the admin password in the JSON data
+            data.admin_password = adminPassword;
+
+            // Set the request headers
+            const headers = new Headers();
+            headers.append("Content-Type", "application/json");
+
+            // Create the request object
+            const request = new Request("{{ url_for('admin_user_options', username=username) }}", {
+                method: "POST",
+                headers: headers,
+                body: JSON.stringify(data),
+            });
+
+            try {
+                // Send the request
+                const response = await fetch(request);
+
+                // Handle the response
+                if (response.ok) {
+                    // The request was successful, you can handle the response here if needed
+                    // For example, you can show a success message or update the UI
+                } else {
+                    // The request failed, you can handle the error here if needed
+                    // For example, you can show an error message or update the UI
+                }
+            } catch (error) {
+                // Handle any errors that occurred during the fetch operation
+                console.error("Error:", error);
+            }
+        } else {
+            // Display an alert if the admin password is empty
+            alert("Please enter admin password.");
+        }
+    }
+
+    // Function to reset the user's password
+    function resetPassword() {
+        // Create a JSON object with the data
+        const data = {
+                "reset_password": {
+                    new_password: document.getElementById("new_password").value,
+                    confirm_password: document.getElementById("confirm_password").value
+                }
+        };
+
+        // Send the JSON data to the server
+        sendDataToServer(data);
+    }
+
+    // Function to add user permission
+    function addPermission() {
+        const selectedPermission = document.getElementById("permissions_dropdown").value;
+
+        // Create a JSON object with the data
+        const data = {
+            "set_permissions": {
+                "add": selectedPermission
+            }
+        };
+
+        // Send the JSON data to the server
+        sendDataToServer(data);
+    }
+
+    // Function to remove user permission
+    function removePermission() {
+        const selectedPermission = document.getElementById("permissions_dropdown").value;
+
+        // Create a JSON object with the data
+        const data = {
+            "set_permissions": {
+                "remove": selectedPermission
+            }
+        };
+
+        // Send the JSON data to the server
+        sendDataToServer(data);
+    }
+</script>
+
+{% endblock %}
+
