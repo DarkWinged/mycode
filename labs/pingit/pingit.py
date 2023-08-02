@@ -11,8 +11,17 @@ import yaml
 
 def convert_yaml(path: str) -> list[str]:
     expanded_path = os.path.expanduser(os.path.normpath(path))
+    result = []
+    
     with open(expanded_path) as yaml_file:
-        return yaml.load(yaml_file, Loader=yaml.SafeLoader)
+        ip_list = yaml.load(yaml_file, Loader=yaml.SafeLoader)
+    
+    if isinstance(ip_list, list):
+        for ip in ip_list:
+            if isinstance(ip, string):
+                result.append(ip)
+    
+    return result
 
 ## Ping router - returns True or False
 def ping_router(hostname):
