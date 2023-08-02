@@ -12,16 +12,17 @@
          {% for row in rows %}
             <tr>
                <form action="/update" method="POST">
-                  <td> {{ row['name'] }} <input type="hidden" id="name" name="name" required value="{{ row['name'] }}"></td>
+                  
+                  <td><div style="text-align: center;">{{ row['name'] }} </div><input type="hidden" id="name" name="name" required value="{{ row['name'] }}"></td>
                   <td><input type="text" id="address" name="address" required value="{{ row['addr'] }}"></td>
                   <td><input type="text" id="city" name="city" required value="{{ row['city'] }}"></td>
                   <td><input type="text" id="pcode" name="pcode" required value="{{ row['pin'] }}"></td>
-                  <td>   <button type="submit">Update</button>
+                  <td><div style="text-align: center;"><button type="submit">Update</button>
                </form> 
                <form action="/delete/{{ row['name'] }}">
                   <button type="submit">Delete</button>
                </form>
-                  </td>
+                  </div></td>
             </tr>
          {% endfor %}
       </table>

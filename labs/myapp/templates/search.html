@@ -2,19 +2,36 @@
 <html>
    <body>
       <table border = 1>
+         <form id="searchForm" method="GET">
+            <input type="text" id="name" name="name" required>
+            <button type="submit">Search</button>
+         </form>
+         <script>
+            document.getElementById('searchForm').addEventListener('submit', function(event) {
+               event.preventDefault(); // Prevent the default form submission
+    
+               const searchValue = document.getElementById('name').value;
+               const formAction = '/search?' + encodeURIComponent(searchValue);
+    
+                // Set the form's action attribute dynamically
+               this.action = formAction;
+    
+                // Submit the form
+               this.submit();
+            });
+         </script>
          <thead>
             <td>Name</td>
             <td>Address</td>
             <td>City</td>
             <td>Pincode</td>
          </thead>
-         
          {% for row in rows %}
             <tr>
                <td>
-                  <form action="/search/{{ row['name'] }}" method="GET">
-                     <button type="submit">{{ row["name"] }}</button>
-                  </form>
+                  <div style="text-align: center;">
+                     <a href = "/search/{{ row['name'] }}">{{ row['name'] |center }}</a>
+                  </div>      
                </td>
                <td>{{ row["addr"] }}</td>
                <td>{{ row["city"] }}</td>
