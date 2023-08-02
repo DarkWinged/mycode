@@ -7,6 +7,12 @@
 
 import os
 import argparse
+import yaml
+
+def convert_yaml(path: str) -> list[str]:
+    expanded_path = os.path.expanduser(os.path.normpath(path))
+    with open(expanded_path) as yaml_file:
+        return yaml.load(yaml_file, Loader=yaml.SafeLoader)
 
 ## Ping router - returns True or False
 def ping_router(hostname):
@@ -33,8 +39,12 @@ def main(switchlist: list[str]):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Ping a list of IP addresses")
     parser.add_argument("switchlist", nargs='?', type=str, help="String that represents a list of IP addresses to ping")
+    parser.add_argument("-y", "--yaml", action="store_true", help="Sets the program to yaml mode where it convers the .yaml at that path to a list of IP addresses")
     args = parser.parse_args()
-    switchlist = args.switchlist.split()
+    if args.yaml:
+        switchlist = convert_yaml(args.switchlist)
+    else:
+        switchlist = args.switchlist.split()
     main(switchlist)
 
 
