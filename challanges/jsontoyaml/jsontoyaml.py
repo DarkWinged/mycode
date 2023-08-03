@@ -27,7 +27,7 @@ def write_yaml(data: list[dict[str, str]]):
 def main():
     data = requests.get(URL).json()
     for entry in range(args.new_entries):
-        print(f'- {entry}:')
+        print(f'- {entry + 1} of {args.new_entries}:')
         data.append(add_new_entry())
     write_yaml(data)
 
