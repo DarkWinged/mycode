@@ -10,11 +10,11 @@ URL = 'https://raw.githubusercontent.com/csfeeser/Python/master/data%20sets/favs
 
 
 def add_new_entry() -> dict[str, str]:
-    new_entry = {}
-    new_entry['name'] = input('name:') 
-    new_entry['movie'] = input('movie:') 
-    new_entry['color'] = input('color:') 
-    new_entry['ice cream'] = input('ice cream:')
+    new_entry = {
+        'name': input('name:'), 
+        'movie': input('movie:'), 
+        'color': input('color:'), 
+        'ice cream': input('ice cream:')}    
     return new_entry
 
 def write_yaml(data: list[dict[str, str]]):
