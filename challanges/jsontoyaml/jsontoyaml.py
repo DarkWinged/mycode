@@ -22,7 +22,7 @@ def write_yaml(data: list[dict[str, str]]):
     if not file_path.endswith('.yaml'):
         file_path = file_path + '.yaml'
     with open(path.expanduser(path.normpath(file_path)), "w") as yaml_file:
-        yaml.dump(data, yaml_file)
+        yaml.dump(data, yaml_file, sort_keys=True)
     
 def main():
     data = requests.get(URL).json()
