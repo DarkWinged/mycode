@@ -11,6 +11,7 @@ import getpass # we need this to accept passwords
 import yaml
 import argparse
 
+
 def remote_path_exists(sftp, path):
     try:
         sftp.stat(os.path.expanduser(os.path.normpath(path)))
@@ -18,7 +19,6 @@ def remote_path_exists(sftp, path):
     except FileNotFoundError:
         print('no path:', path, 'on', f'{sftp.get_channel().transport.get_username()}@{sftp.get_channel().transport.sock.getpeername()[0]}')
         return False
-
 
 def get_files():
     files = []
