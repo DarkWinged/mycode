@@ -3,4 +3,5 @@ bin/*
 lib/*
 lib64
 *.cfg
+*.ipynb_checkpoints
 personal_project/testing/tests/*
