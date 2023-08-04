@@ -16,6 +16,7 @@ def remote_path_exists(sftp, path):
         sftp.stat(os.path.expanduser(os.path.normpath(path)))
         return True
     except FileNotFoundError:
+        print('no path:', path, 'on', f'{sftp.get_channel().transport.get_username()}@{sftp.get_channel().transport.sock.getpeername()[0]}')
         return False
 
 
@@ -53,9 +54,12 @@ def main():
     for entry in data:
         with paramiko.Transport(entry['ip'], 22) as t:
             passwd = getpass.getpass(f'{entry["un"]}@{entry["ip"]} password:')
-            t.connect(username=entry['un'], password=passwd)
-            with paramiko.SFTPClient.from_transport(t) as sftp:
-                move_files(sftp)
+            try:
+                t.connect(username=entry['un'], password=passwd)
+                with paramiko.SFTPClient.from_transport(t) as sftp:
+                    move_files(sftp)
+            except paramiko.ssh_exception.AuthenticationException as e:
+                print(e)
                 
 
 if __name__ == "__main__":
