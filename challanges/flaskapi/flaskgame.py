@@ -19,19 +19,12 @@ if __name__ == '__main__':
 
     # Create data directory and logins.json file with default admin login if they don't exist
     if not os.path.exists(data_base_path):
-        os.makedirs(f'{data_base_path}/logins.json')
+        os.makedirs(f'{data_base_path}/logins.db')
 
-    if not os.path.exists(f'{data_base_path}/logins.json'):
-        default_admin_login = {
-                "admin": {
-                    "password": "changeme",
-                    "permissions": ["admin"]
-                }
-        }
-        with open(f'{data_base_path}/logins.json', 'w') as f:
-            json.dump(default_admin_login, f)
-    
-    login_data_controller = LoginDataController(f'{data_base_path}/logins.json')
+    #if not os.path.exists(f'{data_base_path}/logins.db'):
+    #    os.system(f'touch {data_base_path}/logins.db')
+
+    login_data_controller = LoginDataController(f'{data_base_path}/logins.db')
     
     @app.before_request
     def before_request():
@@ -170,7 +163,7 @@ if __name__ == '__main__':
         all_usernames = login_data_controller.get_usernames()
         filtered_usernames = [username for username in all_usernames if search_perams['querry'].lower() in username.lower()]
         total_filtered_users = len(filtered_usernames)
-        max_offset = max(0, total_filtered_users - limit)
+        max_offset = max(0, total_filtered_users - search_perams['limit'])
 
         # Apply offset and limit to the filtered user data
         filtered_usernames = filtered_usernames[search_perams['offset'] : search_perams['offset'] + search_perams['limit']]
@@ -188,7 +181,7 @@ if __name__ == '__main__':
                                                   max_offset=max_offset))
 
         # Set cookies for the current search, limit, and offset values
-        response.set_cookie('search_perams', jsonify(search_perams))
+        response.set_cookie('search_perams', json.dumps(search_perams))
 
         return response
 
@@ -214,7 +207,7 @@ if __name__ == '__main__':
                 'offset': 0
             })
 
-            if not isinstance(search_perams, dict()):
+            if not isinstance(search_perams, dict):
                 search_perams = json.loads(search_perams)    
 
             # Get the filtered users data using the helper function
