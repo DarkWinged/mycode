@@ -82,12 +82,11 @@ if __name__ == '__main__':
     except IOError as e:
         print(f"An error occurred while creating the file: {e}")
 
-def update_rc_file(user_override, contact_override, editor_override):
+def update_rc_file(user_override= None, contact_override= None, editor_override= None):
     rc_file_path = os.path.expanduser("~/.newpyrc")
 
     with open(rc_file_path, 'r') as rc_file:
         lines = rc_file.readlines()
-
     with open(rc_file_path, 'w') as rc_file:
         for line in lines:
             if line != '' or line != '\n':
@@ -100,13 +99,13 @@ def update_rc_file(user_override, contact_override, editor_override):
                 elif key == "contact":
                     rc_file.write(f"contact {contact_override if contact_override else value.strip()}\n")
                 elif key == "editor":
-                    rc_file.write(f'editor {contact_override if contact_override else value.strip()}\n')
+                    rc_file.write(f'editor {editor_override if editor_override else value.strip()}\n')
                 else:
                     rc_file.write(f'{key} {value}\n')
 
-    print(f"Updated ~/.newpyrc with { 'user:' + user_override if user_override else ''}\
-            {(', ' if user_override else '') + contact_override if contact_override else ''}\
-            {(', ' if user_override or contact_override else '') + editor_override if editor_override else ''}")
+    print(f"""Updated ~/.newpyrc with { 'user:' + user_override if user_override else ''}\
+{(', ' if user_override else '') + contact_override if contact_override else ''}\
+{(', ' if user_override or contact_override else '') + editor_override if editor_override else ''}""")
 
 if __name__ == "__main__":
     
