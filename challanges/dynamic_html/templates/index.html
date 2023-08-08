@@ -8,7 +8,7 @@
             <h1> Emails </h1>
             <ul>
                 {% for entry in emails %}
-                <li> {{ entry['name']  }}> {{ entry['email'] }} </li>
+                <li> {{ entry['name'] }}: {{ entry['email'] }} </li>
                 {% endfor  %}
             </ul>
         {% endif %}
