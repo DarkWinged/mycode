@@ -1,0 +1,40 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #808040;
+}
+
+header {
+  background: linear-gradient(to bottom, #444444, #222222);
+  color: white;
+  padding: 20px;
+}
+
+h1 {
+  animation-name: cssAnimation_0;
+  animation-duration: 1000ms;
+  animation-timing-function: ease-in;
+  animation-delay: 0ms;
+  animation-iteration-count: 1;
+}
+
+@keyframes cssAnimation_0 {
+  from {
+    transform: scale(0.5, 0.5)
+  }
+  to {
+    transform: scale(1, 1);
+  }
+}
+
+ul {
+  border: 2px dashed rgba(100, 100, 100, 1);
+  border-radius: 27px;
+  background: linear-gradient(
+    138deg,
+    rgba(110, 15, 15, 1) 9%,
+    rgba(129, 11, 153, 1) 15%,
+    rgba(179, 127, 7, 1) 28%
+  );
+  background-blend-mode: overlay;
+}
+ 
