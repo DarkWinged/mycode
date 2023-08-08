@@ -1,0 +1,16 @@
+---
+- name: Tuesday Challenge
+  hosts: planetexpress
+  gather_facts: true
+  connection: ssh
+
+  tasks:
+   - name: create a directory
+     file:
+       dest: ~/challenge
+       state: directory
+
+   - name: creating a file
+     copy:
+       src: ~/test.txt
+       dest: ~/challenge/challengefile.txt
