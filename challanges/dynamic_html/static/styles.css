@@ -38,7 +38,8 @@ ul {
   border-radius: 27px;
   background: black;
   padding: 20px;
-  margin: 0;
+  margin: auto;
+  width: 20%;
 }
 
 li {
