@@ -1,0 +1,16 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="{{url_for('static', filename='styles.css')}}"></link>
+        <title> Dynamic HTML Project </title>
+    </head>
+    <body>
+        {% if emails  %}
+            <h1> Emails </h1>
+            <ul>
+                {% for entry in emails %}
+                <li> {{ entry['name'] }}: {{ entry['email'] }} </li>
+                {% endfor  %}
+            </ul>
+        {% endif %}
+    </body>
+</html>

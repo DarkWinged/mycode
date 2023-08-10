@@ -1,0 +1,33 @@
+
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>My Webpage</title>
+        <link rel="stylesheet" href="{{url_for('static', filename='styles.css') }}"></link> 
+        <script>const refreshPage = () => location.reload()</script>       <!--this is JavaScript code, which can be placed in a <script> tag-->
+    </head>
+    <body>
+        <h1>Hello World! Again</h1>
+        <!--This is where your additional code goes comment goes-->
+        <button onclick="refreshPage()" style="color: white; background-color:grey">See Changes</button>    <!--this button fires the function defined above-->
+        <h2> Some fun info </h2>
+        <div>
+            <ul>
+                <li> <p> Python is fun! </p> </li>
+                <li> <p> HTML is great! </p> </li>
+                <li> <p> Togeather they are unstopable </p> </li>
+            </ul>
+        </div>
+        <h2> Helpful rescources </h2>
+        <div>
+            <p> HTML often has imbedded JavaScript code</p>
+            <p> Below a some fun games that teach JavaScript </p>
+            <ol>
+                <li> <a href= "https://store.steampowered.com/app/1812820/Bitburner/">Bitburner</a> an idle game that teaches how to use async JS functions </li>
+                <li> <a href= "https://screeps.com/">Screeps</a> a MMO that teaches how to manage data and make decisions based on that data </li>
+            </ol>
+        </div>
+    </body>
+</html>
+
