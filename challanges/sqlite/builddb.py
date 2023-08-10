@@ -28,7 +28,7 @@ def author_search():
         publisher = Publisher.get(id=book.publisher_id).name
         books.append({'title':book.title,'coauthors':coauthors, 'publisher':publisher})
 
-    print(f'{author.name.capitalize()} also known as {author.pen_name.capitalize()} has published {len(books)} book{"s" if len(books) > 1 else ""}.')
+    print(f'{author.name.capitalize()} also known as {author.pen_name.capitalize()} has written {len(books)} book{"s" if len(books) > 1 else ""}.')
     for book in books:
         print(f'{book["title"].capitalize()}:')
         if book['coauthors']:
