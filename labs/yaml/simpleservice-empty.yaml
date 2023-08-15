@@ -1,0 +1,22 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: login-site
+  labels:
+    name: login-site-app
+spec:
+  containers:
+  - name: login-site-app
+    image: registry.gitlab.com/darkwinged1/login_site/login_site:0.5.0
+    ports:
+    - name: login-app
+      containerPort: 5000
+      protocol: TCP
+    volumeMounts:
+    - name: server-data-volume
+      mountPath: /app/server_data
+  volumes:
+  - name: server-data-volume
+    hostPath:
+      path: /var/server_data
