@@ -1,0 +1,23 @@
+
+
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: historylimitechocomplete
+spec:
+  successfulJobsHistoryLimit: 2
+  failedJobsHistoryLimit: 1
+  schedule: "*/1 * * * *"
+  jobTemplate:
+    spec:
+      parallelism: 1
+      completions: 1
+      template:
+        spec:
+          containers:
+          - name: echo
+            image: alpine:3.2
+            command: ["/bin/sh"]
+            args: ["-c", "echo hello; sleep 10"]
+          restartPolicy: Never
+

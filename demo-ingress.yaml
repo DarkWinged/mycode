@@ -1,0 +1,21 @@
+
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: demo-ingress
+  namespace: default
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: aux1-36d33f18-1530-49b5-9e26-9ca258985a75.live.alta3.com
+    http:
+      paths:
+      - backend:
+          service:
+            name: demo-svc
+            port:
+              number: 80
+        path: / 
+        pathType: Prefix
+
